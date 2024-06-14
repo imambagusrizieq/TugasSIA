@@ -1,3 +1,10 @@
+<?php
+ session_start();
+ if (!isset($_SESSION['username'])) {
+ header('location: index.php');
+}else{
+ include_once('koneksi.php');}
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +28,7 @@
                 include_once('sidebar.php');
                 ?>
                 </div>
-            <div class="col-md-9" >
+            <div class="col-md-9"  style="background-color:#FBF6FA>
                 <div class="text-end p-3">
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
