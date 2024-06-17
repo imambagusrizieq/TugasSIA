@@ -1,47 +1,48 @@
+<?php
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-$exec = mysqli_query($koneksi, $query);
-24. $data = mysqli_fetch_array($exec);
-25. if(password_verify($password, $data['password'])){
-26. if($password_baru == $password_ulang){
-27. $password = password_hash($password_baru, PASSWORD_BCRYPT);
-28. $query = "UPDATE tbl_pengguna SET password='$password', 
+if(isset($_POST['submit'])){
+    session_start();
+    include_once('../../koneksi.php');
+    $username = $_POST['username'];
+    $nama_lengkap = $_POST['nama_lengkap'];
+    $email- $_POST[email];
+    $password = $_POST['password'];
+    $password_baru = $_POST['password_baru'];
+        $password_ulang = $_POST['password_ulang'];
+        if(empty($password)){
+            $query = "UPDATE tbl_pengguna SET nama_lengkap='$nama_lengkap', email='$email' WHERE username='$username'";
+            $exec = mysqli_query($koneksi, $query);
+            if($exec){
+                $_SESSION['pesan'] = "Data profil telah diperbarui";
+                header('location:../../dashboard.php?modul=profile');
+            }else{
+                $_SESSION['pesan'] = "Data profil telah diperbarui";
+                header('location:../../dashboard.php?modul=profile');
+            }
+            }else{
+            $query = "SELECT * FROM tabel_pengguna WHERE username='$username'";
+           $exec = mysqli_query($koneksi, $query);
+ $data = mysqli_fetch_array($exec);
+ if(password_verify($password, $data['password'])){
+ if($password_baru == $password_ulang){
+ $password = password_hash($password_baru, PASSWORD_BCRYPT);
+ $query = "UPDATE tbl_pengguna SET password='$password', 
 nama_lengkap='$nama_lengkap', email='$email' WHERE username='$username'";
-29. $exec = mysqli_query($koneksi, $query);
-30. if($exec){
-31. $_SESSION['pesan'] = "Data profile telah diperbaharui";
-32. header('location:../../dashboard.php?modul=profile');
-33. }
-34. }else{
-35. $_SESSION['pesan'] = "Password baru tidak sesuai";
-36. header('location:../../dashboard.php?modul=profile');
-37. }
-38. }else{
-39. $_SESSION['pesan'] = "Password lama tidak sesuai";
-40. header('location:../../dashboard.php?modul=profile');
-41. }
-42. }
-43. }else{
-44. header('location:../../index.php');
-45. }
-46. ?>
+ $exec = mysqli_query($koneksi, $query);
+ if($exec){
+ $_SESSION['pesan'] = "Data profile telah diperbaharui";
+ header('location:../../dashboard.php?modul=profile');
+ }
+ }else{
+ $_SESSION['pesan'] = "Password baru tidak sesuai";
+ header('location:../../dashboard.php?modul=profile');
+ }
+ }else{
+ $_SESSION['pesan'] = "Password lama tidak sesuai";
+ header('location:../../dashboard.php?modul=profile');
+ }
+ }
+ }else{
+ header('location:../../index.php');
+ }
+ ?>
